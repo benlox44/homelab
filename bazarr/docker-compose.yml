@@ -1,0 +1,22 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./config:/config
+      - ${HDD_ROOT}:/data
+
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  default:
+    name: caddy_net
+    external: true

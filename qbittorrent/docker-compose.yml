@@ -1,0 +1,27 @@
+services:
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent
+    container_name: qbittorrent
+    hostname: qbittorrent
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./config:/config
+      - ${HDD_ROOT}:/data
+
+    expose:
+      - ${WEBUI_PORT}
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - ${WEBUI_PORT}:${WEBUI_PORT}
+
+networks:
+  default:
+    name: caddy_net
+    external: true

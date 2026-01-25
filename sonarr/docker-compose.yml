@@ -1,0 +1,22 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./config:/config
+      - ${HDD_ROOT}:/data
+
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  default:
+    name: caddy_net
+    external: true

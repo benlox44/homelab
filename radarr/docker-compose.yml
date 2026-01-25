@@ -1,0 +1,22 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./config:/config
+      - ${HDD_ROOT}:/data
+
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  default:
+    name: caddy_net
+    external: true
