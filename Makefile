@@ -13,7 +13,7 @@ help:
 	@echo "Individual services:"
 	@echo "  make nginx-[up|down|restart|logs]"
 	@echo "  make qbit-[up|down|restart|logs]"
-	@echo "  make mc-survival-[up|down|restart|logs|cli]"
+	@echo "  make mc-[up|down|restart|logs|cli]"
 	@echo "  make prowlarr-[up|down|restart|logs]"
 	@echo "  make radarr-[up|down|restart|logs]"
 	@echo "  make sonarr-[up|down|restart|logs]"
@@ -63,20 +63,20 @@ qbit-restart:
 qbit-logs:
 	$(DC) logs -f qbittorrent
 
-mc-survival-up:
-	$(DC) up -d mc-survival
+mc-up:
+	$(DC) up -d mc
 
-mc-survival-down:
-	$(DC) stop mc-survival && $(DC) rm -f mc-survival
+mc-down:
+	$(DC) stop mc && $(DC) rm -f mc
 
-mc-survival-restart:
-	$(DC) restart mc-survival
+mc-restart:
+	$(DC) restart mc
 
-mc-survival-logs:
-	$(DC) logs -f mc-survival
+mc-logs:
+	$(DC) logs -f mc
 
-mc-survival-cli:
-	$(DC) exec -it mc-survival rcon-cli
+mc-cli:
+	$(DC) exec -it mc rcon-cli
 
 prowlarr-up:
 	$(DC) up -d prowlarr

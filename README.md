@@ -4,8 +4,8 @@ Self-hosted media server and services management using Docker Compose.
 
 ## Services
 
-- **Nginx Proxy Manager** - Reverse proxy with SSL (Ports: 80, 443, 81)
 - **Jellyfin** - Media streaming server
+- **Nginx Proxy Manager** - Reverse proxy with SSL (Ports: 80, 443, 81)
 - **Radarr** - Movie management (Port: 7878)
 - **Sonarr** - TV shows management (Port: 8989)
 - **Bazarr** - Subtitles management (Port: 6767)
@@ -20,6 +20,7 @@ Self-hosted media server and services management using Docker Compose.
 - **Docker** and **Docker Compose** installed
 - **Make** (Windows: `choco install make` or use WSL)
 - External HDD or dedicated disk for media storage
+- Docker network `caddy_net` created (see below)
 
 ## Initial Setup
 
@@ -30,7 +31,28 @@ git clone <your-repo-url>
 cd Selfhost
 ```
 
-### 2. Create media storage structure
+### 2. Configure Environment
+
+Copy the example environment files and adjust the values to match your system:
+
+```bash
+# Main environment variables
+cp .env.example .env
+
+# Service-specific environment variables
+cp qbittorrent/.env.example qbittorrent/.env
+cp immich/.env.example immich/.env
+```
+
+### 3. Create External Network
+
+The services rely on an external network named `caddy_net`:
+
+```bash
+docker network create caddy_net
+```
+
+### 4. Create media storage structure
 
 Create this folder structure on your external drive:
 
@@ -42,24 +64,27 @@ C:\Media\  (or E:\, D:\, etc.)
 │   │   └── shows\
 │   └── downloads\
 └── immich\
-    └── library\
+    ├── library\
+    ├── upload\
+    ├── thumbs\
+    ├── encoded-video\
+    ├── profile\
+    └── backups\
 ```
 
-### 3. Configure environment variables
+### 5. Start Services
 
-Copy example files and edit with your values:
-
-```bash
-cp .env.example .env
-cp qbittorrent/.env.example qbittorrent/.env
-cp immich/.env.example immich/.env
-cp mc-survival/.env.example mc-survival/.env
-```
-
-### 4. Create Docker network
+You can start specific services using the Makefile:
 
 ```bash
-docker network create caddy_net
+# Start all services
+make up
+
+# Start specific services
+make nginx-up
+make mc-up
+make immich-up
+# ... and so on
 ```
 
 ## Commands
@@ -82,7 +107,7 @@ Available actions: `up`, `down`, `restart`, `logs`
 
 **Special commands:**
 ```bash
-make mc-survival-cli  # Open Minecraft RCON console
+make mc-cli  # Open Minecraft RCON console
 ```
 
 ## Post-Installation Configuration

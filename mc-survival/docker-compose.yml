@@ -1,6 +1,8 @@
 services:
-  mc-survival:
+  mc:
+    container_name: mc
     image: itzg/minecraft-server:latest
+    restart: unless-stopped
     tty: true
     stdin_open: true
     ports:
@@ -13,7 +15,7 @@ services:
       VERSION: "1.21.11"
       MEMORY: "10240M"
       MAX_PLAYERS: "10"
-      MOTD: "\u00a7r        \u00a7f\u00a7lSurvival\u00a7f \u00a7oForever World\u00a7f  [1.12.11]\u00a7r\n\u00a7f\u00a7l     Network: \u00a79\u00a7n\u00a7ogithub.com/benlox44/smp-mods"
+      MOTD: "\u00a7r           \u00a7f\u00a7lSurvival\u00a7f \u00a7oForever World\u00a7f  [1.12.11]\u00a7r\n\u00a7f\u00a7l              Network: \u00a79\u00a7n\u00a7olacto.vip"
       TZ: "America/Santiago"
       DIFFICULTY: "3"
       FORCE_GAMEMODE: "true"
