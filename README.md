@@ -4,16 +4,17 @@ Self-hosted media server and services management using Docker Compose.
 
 ## Services
 
-- **Jellyfin** - Media streaming server
-- **Nginx Proxy Manager** - Reverse proxy with SSL (Ports: 80, 443, 81)
-- **Radarr** - Movie management (Port: 7878)
-- **Sonarr** - TV shows management (Port: 8989)
 - **Bazarr** - Subtitles management (Port: 6767)
-- **Prowlarr** - Indexer manager (Port: 9696)
-- **qBittorrent** - Torrent client (Port: 8080)
+- **Cloudflared** - Cloudflare Tunnel for secure remote access
 - **FlareSolverr** - Cloudflare bypass (Port: 8191)
 - **Immich** - Photo/video backup (Port: 2283)
 - **Minecraft Survival** - Modded server (Port: 25565)
+- **Nginx Proxy Manager** - Reverse proxy with SSL (Ports: 80, 443, 81)
+- **Prowlarr** - Indexer manager (Port: 9696)
+- **qBittorrent** - Torrent client (Port: 8080)
+- **Radarr** - Movie management (Port: 7878)
+- **Sonarr** - TV shows management (Port: 8989)
+- **Terraria** - Game Server (Port: 7777)
 
 ## Prerequisites
 
@@ -83,6 +84,7 @@ make up
 # Start specific services
 make nginx-up
 make mc-up
+make terraria-up
 make immich-up
 # ... and so on
 ```

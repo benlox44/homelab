@@ -1,10 +1,12 @@
 include:
+  - path: ./bazarr/docker-compose.yml
+  - path: ./cloudflared/docker-compose.yml
+  - path: ./flaresolverr/docker-compose.yml
+  - path: ./immich/docker-compose.yml
+  - path: ./mc/docker-compose.yml
   - path: ./nginx/docker-compose.yml
-  - path: ./qbittorrent/docker-compose.yml
-  - path: ./mc-survival/docker-compose.yml
   - path: ./prowlarr/docker-compose.yml
+  - path: ./qbittorrent/docker-compose.yml
   - path: ./radarr/docker-compose.yml
   - path: ./sonarr/docker-compose.yml
-  - path: ./flaresolverr/docker-compose.yml
-  - path: ./bazarr/docker-compose.yml
-  - path: ./immich/docker-compose.yml
+  - path: ./terraria/docker-compose.yml
