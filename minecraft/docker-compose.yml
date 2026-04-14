@@ -1,6 +1,6 @@
 services:
-  mc:
-    container_name: mc
+  minecraft:
+    container_name: minecraft
     image: itzg/minecraft-server:latest
     restart: unless-stopped
     tty: true
@@ -17,7 +17,7 @@ services:
       MEMORY: "10240M"
       MAX_PLAYERS: "10"
       MOTD: "\u00a7r           \u00a7f\u00a7lSurvival\u00a7f \u00a7oForever World\u00a7f  [1.12.11]\u00a7r\n\u00a7f\u00a7l              Network: \u00a79\u00a7n\u00a7olacto.vip"
-      TZ: "America/Santiago"
+      TZ: ${TZ}
       DIFFICULTY: "3"
       FORCE_GAMEMODE: "true"
       ENTITY_BROADCAST_RANGE_PERCENTAGE: "175"

@@ -4,15 +4,16 @@ Self-hosted media server and services management using Docker Compose.
 
 ## Services
 
+- **AdGuard Home** - Local DNS Resolution (Ports: 53, 3000, 8083)
 - **Bazarr** - Subtitles management (Port: 6767)
-- **Cloudflared** - Cloudflare Tunnel for secure remote access
 - **FlareSolverr** - Cloudflare bypass (Port: 8191)
 - **Immich** - Photo/video backup (Port: 2283)
-- **Minecraft Survival** - Modded server (Port: 25565)
+- **Minecraft** - Modded server (Port: 25565)
 - **Nginx Proxy Manager** - Reverse proxy with SSL (Ports: 80, 443, 81)
 - **Prowlarr** - Indexer manager (Port: 9696)
 - **qBittorrent** - Torrent client (Port: 8080)
 - **Radarr** - Movie management (Port: 7878)
+
 - **Sonarr** - TV shows management (Port: 8989)
 - **Terraria** - Game Server (Port: 7777)
 
@@ -62,7 +63,8 @@ C:\Media\  (or E:\, D:\, etc.)
 ├── jellyfin\
 │   ├── library\
 │   │   ├── movies\
-│   │   └── shows\
+│   │   ├── shows\
+│   │   └── books\
 │   └── downloads\
 └── immich\
     ├── library\
@@ -83,7 +85,7 @@ make up
 
 # Start specific services
 make nginx-up
-make mc-up
+make minecraft-up
 make terraria-up
 make immich-up
 # ... and so on
@@ -109,7 +111,7 @@ Available actions: `up`, `down`, `restart`, `logs`
 
 **Special commands:**
 ```bash
-make mc-cli  # Open Minecraft RCON console
+make minecraft-cli  # Open Minecraft RCON console
 ```
 
 ## Post-Installation Configuration
@@ -121,22 +123,17 @@ make mc-cli  # Open Minecraft RCON console
    - Add Prowlarr indexers
    - Connect qBittorrent download client
 
-2. **Sonarr** (`http://localhost:8989`):
-   - Set root folder: `/data/jellyfin/library/shows`
-   - Add Prowlarr indexers
-   - Connect qBittorrent download client
+  2. **Sonarr** (`http://localhost:8989`):
+     - Set root folder: `/data/jellyfin/library/shows`
+     - Add Prowlarr indexers
+     - Connect qBittorrent download client
 
-3. **Bazarr** (`http://localhost:6767`):
-   - Connect Radarr and Sonarr
-   - Add subtitle providers
+  3. **Bazarr** (`http://localhost:6767`):
+     - Connect Radarr and Sonarr
+     - Add subtitle providers
 
-4. **Prowlarr** (`http://localhost:9696`):
-   - Add indexers (use FlareSolverr proxy for protected sites)
-   - Sync with Radarr/Sonarr
-
-### Nginx Proxy Manager
-
-Access at `http://localhost:81`
-- Default credentials: `admin@example.com` / `changeme`
+  4. **Prowlarr** (`http://localhost:9696`):
+     - Add indexers (use FlareSolverr proxy for protected sites)
+     - Sync with Radarr/Sonarr
 - Configure proxy hosts for your services
 - Set up SSL certificates

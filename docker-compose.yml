@@ -1,9 +1,10 @@
 include:
+  - path: ./adguard/docker-compose.yml
   - path: ./bazarr/docker-compose.yml
-  - path: ./cloudflared/docker-compose.yml
   - path: ./flaresolverr/docker-compose.yml
+  - path: ./homepage/docker-compose.yml
   - path: ./immich/docker-compose.yml
-  - path: ./mc/docker-compose.yml
+  - path: ./minecraft/docker-compose.yml
   - path: ./nginx/docker-compose.yml
   - path: ./prowlarr/docker-compose.yml
   - path: ./qbittorrent/docker-compose.yml

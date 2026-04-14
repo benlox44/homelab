@@ -16,14 +16,20 @@ __pycache__/
 *.db-shm
 *.db-wal
 *.sqlite
-mc/data/
+minecraft/data/
 nginx/data/
 nginx/letsencrypt/
 immich/library/
 immich/postgres/
 immich/model-cache/
+adguard/confdir/
+adguard/workdir/
+terraria/plugins/
+terraria/world/
+terraria/.git/
 
 **/config/
+!homepage/config/
 **/Definitions/
 **/MediaCover/
 **/BT_backup/
@@ -32,3 +38,8 @@ immich/model-cache/
 **/ipc-socket
 ipc-socket
 qBittorrent-data.conf
+
+*.db
+*.sqlite3
+
+

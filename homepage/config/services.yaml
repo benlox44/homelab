@@ -1,0 +1,107 @@
+---
+- Media:
+    - Immich:
+        icon: immich.png
+        href: "https://immich.lacto.vip"
+        description: "Photos & Videos"
+        widget:
+            type: immich
+            url: http://immich-server:2283
+            key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
+            version: 2
+    - Jellyfin:
+        icon: jellyfin.png
+        href: "https://jellyfin.lacto.vip"
+        description: "Media Server"
+        widget:
+            type: jellyfin
+            url: https://jellyfin.lacto.vip
+            key: "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}"
+
+- Arr Stack:
+    - Bazarr:
+        icon: bazarr.png
+        href: "https://bazarr.lacto.vip"
+        description: "Subtitle Management"
+        widget:
+            type: bazarr
+            url: http://bazarr:6767
+            key: "{{HOMEPAGE_VAR_BAZARR_API_KEY}}"
+    - Prowlarr:
+        icon: prowlarr.png
+        href: "https://prowlarr.lacto.vip"
+        description: "Indexer Manager"
+        widget:
+            type: prowlarr
+            url: http://prowlarr:9696
+            key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
+    - Radarr:
+        icon: radarr.png
+        href: "https://radarr.lacto.vip"
+        description: "Movie Management"
+        widget:
+            type: radarr
+            url: http://radarr:7878
+            key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
+    - Sonarr:
+        icon: sonarr.png
+        href: "https://sonarr.lacto.vip"
+        description: "TV Show Management"
+        widget:
+            type: sonarr
+            url: http://sonarr:8989
+            key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
+
+- Infrastructure:
+    - AdGuard Home:
+        icon: adguard-home.png
+        href: "https://adguard.lacto.vip"
+        description: "DNS & Ad Blocker"
+        widget:
+            type: adguard
+            url: http://adguard:8083
+            username: "{{HOMEPAGE_VAR_ADMIN_USER}}"
+            password: "{{HOMEPAGE_VAR_ADMIN_PASS}}"
+    - Nginx Proxy Manager:
+        icon: nginx-proxy-manager.png
+        href: "https://nginx.lacto.vip"
+        description: "Reverse Proxy"
+        widget:
+            type: npm
+            url: http://nginx:81
+            username: "{{HOMEPAGE_VAR_ADMIN_EMAIL}}"
+            password: "{{HOMEPAGE_VAR_ADMIN_PASS}}"
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: "https://qbittorrent.lacto.vip/"
+        description: "Torrent Client"
+        widget:
+            type: qbittorrent
+            url: http://qbittorrent:8080
+            username: "{{HOMEPAGE_VAR_ADMIN_USER}}"
+            password: "{{HOMEPAGE_VAR_ADMIN_PASS}}"
+
+- Games:
+    - Minecraft Map:
+        icon: minecraft.png
+        href: "https://mcmap.lacto.vip"
+        description: "Server World Map"
+    - Minecraft Server:
+        icon: mdi-github
+        href: "https://github.com/benlox44/smp-mods"
+        description: "Modpack & Info"
+    - Terraria:
+        icon: terraria.png
+        href: "#"
+        description: "Server IP (Soon)"
+
+- External:
+    - Landing Page:
+        icon: mdi-home
+        href: "https://lacto.vip"
+        description: "Public Profile"
+    - Tailscale:
+        icon: tailscale.png
+        href: "https://login.tailscale.com/admin/machines"
+        description: "VPN & Network"
+
