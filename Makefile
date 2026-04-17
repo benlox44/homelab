@@ -13,15 +13,16 @@ help:
 	@echo "Individual services:"
 	@echo "  make adguard-[up|down|restart|logs]"
 	@echo "  make bazarr-[up|down|restart|logs]"
-	@echo "  make flaresolverr-[up|down|restart|logs]"
+    @echo "  make filebrowser-[up|down|restart|logs]"
+    @echo "  make flaresolverr-[up|down|restart|logs]"
 	@echo "  make immich-[up|down|restart|logs]"
+	@echo "  make jellyseerr-[up|down|restart|logs]"
 	@echo "  make mc-[up|down|restart|logs|cli]"
 	@echo "  make nginx-[up|down|restart|logs]"
 	@echo "  make prowlarr-[up|down|restart|logs]"
 	@echo "  make qbit-[up|down|restart|logs]"
 	@echo "  make radarr-[up|down|restart|logs]"
 	@echo "  make sonarr-[up|down|restart|logs]"
-	@echo "  make terraria-[up|down|restart|logs]"
 
 up:
 	$(DC) up -d
@@ -152,17 +153,9 @@ flaresolverr-restart:
 flaresolverr-logs:
 	$(DC) logs -f flaresolverr
 
-terraria-up:
-	$(DC) up -d terraria
 
-terraria-down:
-	$(DC) stop terraria && $(DC) rm -f terraria
 
-terraria-restart:
-	$(DC) restart terraria
 
-terraria-logs:
-	$(DC) logs -f terraria
 
 
 adguard-up:
@@ -177,3 +170,15 @@ adguard-restart:
 adguard-logs:
 	$(DC) logs -f adguard
 
+
+jellyseerr-up:
+        $(DC) up -d jellyseerr
+
+jellyseerr-down:
+        $(DC) stop jellyseerr && $(DC) rm -f jellyseerr
+
+jellyseerr-restart:
+        $(DC) restart jellyseerr
+
+jellyseerr-logs:
+        $(DC) logs -f jellyseerr

@@ -1,0 +1,21 @@
+services:
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=info
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  default:
+    name: caddy_net
+    external: true

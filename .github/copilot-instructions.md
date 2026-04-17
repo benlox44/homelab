@@ -33,3 +33,7 @@ When suggesting or creating code in this project, please adhere to the following
          external: true
      ```
    - This ensures internal DNS resolution (e.g., Nginx Proxy Manager routing traffic via `http://container_name:port`) and avoids exposing unnecessary ports unless strictly required.
+
+6. **Peer Review & Standardization (Env Vars)**:
+   - Always check peer containers (like `radarr` or `qbittorrent`) to match standard environment variables and `.env` references.
+   - When creating a new service, ensure you include `PUID=${PUID}`, `PGID=${PGID}`, and `TZ=${TZ}` if it's a standard media or utility app, rather than hardcoding values or omitting them.

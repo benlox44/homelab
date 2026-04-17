@@ -3,18 +3,15 @@ title: "Homelab"
 theme: dark
 
 layout:
-  - Media:
+  - Applications:
+      style: row
+      columns: 2
+  - Media & Downloads:
       style: row
       columns: 3
-  - Arr Stack:
+  - Gaming:
       style: row
       columns: 2
   - Infrastructure:
       style: row
       columns: 3
-  - Games:
-      style: row
-      columns: 3
-  - External:
-      style: row
-      columns: 2
