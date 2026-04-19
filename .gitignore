@@ -41,5 +41,4 @@ qBittorrent-data.conf
 
 *.db
 *.sqlite3
-
-
+*.sql

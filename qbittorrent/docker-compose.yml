@@ -12,7 +12,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config:/config
-      - ${HDD_ROOT}:/data
+      - ${MEDIA_ROOT}:/data
 
     expose:
       - ${WEBUI_PORT}

@@ -2,7 +2,4 @@
 - resources:
     cpu: true
     memory: true
-    disk: /
-
-- docker:
-    host: my-docker
+    disk: /data

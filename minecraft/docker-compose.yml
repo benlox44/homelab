@@ -16,9 +16,9 @@ services:
       VERSION: "1.21.11"
       MEMORY: "5G"
       MAX_PLAYERS: "10"
-      ENABLE_AUTOPAUSE: "true"
-      AUTOPAUSE_TIMEOUT_EST: "600"
-      AUTOPAUSE_TIMEOUT_INIT: "600"
+      ENABLE_AUTOPAUSE: "false"
+      PAUSE_WHEN_EMPTY_SECONDS: "60"
+      MAX_TICK_TIME: "-1"
       MOTD: "\u00a7r           \u00a7f\u00a7lSurvival\u00a7f \u00a7oForever World\u00a7f  [1.12.11]\u00a7r\n\u00a7f\u00a7l              Network: \u00a79\u00a7n\u00a7olacto.vip"
       TZ: ${TZ}
       DIFFICULTY: "3"

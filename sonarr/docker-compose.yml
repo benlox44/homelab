@@ -8,7 +8,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config:/config
-      - ${HDD_ROOT}:/data
+      - ${MEDIA_ROOT}:/data
 
     ports:
       - 8989:8989

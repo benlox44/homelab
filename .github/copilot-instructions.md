@@ -37,3 +37,6 @@ When suggesting or creating code in this project, please adhere to the following
 6. **Peer Review & Standardization (Env Vars)**:
    - Always check peer containers (like `radarr` or `qbittorrent`) to match standard environment variables and `.env` references.
    - When creating a new service, ensure you include `PUID=${PUID}`, `PGID=${PGID}`, and `TZ=${TZ}` if it's a standard media or utility app, rather than hardcoding values or omitting them.
+
+7. **Language and Localization**:
+   - All generated scripts, code comments, and command-line outputs MUST be written in English. Maintain consistent English terminology across the repository.

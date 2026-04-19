@@ -1,141 +1,84 @@
-# Selfhost Stack
+# Homelab Stack
 
-Self-hosted media server and services management using Docker Compose.
+A cleanly organized, Make-driven self-hosted environment using Docker Compose.
 
-## Services
+## 📦 Services
 
-- **AdGuard Home** - Local DNS Resolution (Ports: 53, 3000, 8083)
-- **Bazarr** - Subtitles management (Port: 6767)
-- **Filebrowser** - Web file manager (Port: 8084)
-- **FlareSolverr** - Cloudflare bypass (Port: 8191)
-- **Immich** - Photo/video backup (Port: 2283)
-- **Jellyseerr** - Media requests (Port: 5055)
-- **Minecraft** - Modded server (Port: 25565)
-- **Nginx Proxy Manager** - Reverse proxy with SSL (Ports: 80, 443, 81)
-- **Prowlarr** - Indexer manager (Port: 9696)
-- **qBittorrent** - Torrent client (Port: 8080)
-- **Radarr** - Movie management (Port: 7878)
+All services are continuously sorted A-Z and routed through the unified `caddy_net` Docker network.
 
-- **Sonarr** - TV shows management (Port: 8989)
+| Service | Description | Port |
+| :--- | :--- | :--- |
+| **AdGuard Home** | Network-wide ad blocking & DNS | `53`, `3000`, `8083` |
+| **Bazarr** | Subtitle management | `6767` |
+| **Filebrowser** | Web file manager | `8084` |
+| **FlareSolverr** | Cloudflare bypass server | `8191` |
+| **Homepage** | Application dashboard | `3001` |
+| **Immich** | Self-hosted photo & video backup | `2283` |
+| **Jellyseerr** | Media request management | `5055` |
+| **Minecraft** | Minecraft Server & Squaremap | `25565` |
+| **Nginx** | Nginx Proxy Manager (Reverse proxy) | `80`, `81`, `443` |
+| **Prowlarr** | Indexer manager | `9696` |
+| **qBittorrent** | Torrent client | `8080`, `6881` |
+| **Radarr** | Movie collection manager | `7878` |
+| **Sonarr** | TV show collection manager | `8989` |
 
+## 🚀 Getting Started
 
-## Prerequisites
+### 1. Prerequisites
+- **Docker** and **Docker Compose**
+- **Make**
+- Dedicated media storage drives.
 
-- **Docker** and **Docker Compose** installed
-- **Make** (Windows: `choco install make` or use WSL)
-- External HDD or dedicated disk for media storage
-- Docker network `caddy_net` created (see below)
-
-## Initial Setup
-
-### 1. Clone the repository
-
-```bash
-git clone <your-repo-url>
-cd Selfhost
-```
-
-### 2. Configure Environment
-
-Copy the example environment files and adjust the values to match your system:
-
-```bash
-# Main environment variables
-cp .env.example .env
-
-# Service-specific environment variables
-cp qbittorrent/.env.example qbittorrent/.env
-cp immich/.env.example immich/.env
-```
-
-### 3. Create External Network
-
-The services rely on an external network named `caddy_net`:
-
+### 2. Network Setup
+Create the external network for internal proxying:
 ```bash
 docker network create caddy_net
 ```
 
-### 4. Create media storage structure
-
-Create this folder structure on your external drive:
-
-```
-C:\Media\  (or E:\, D:\, etc.)
-├── jellyfin\
-│   ├── library\
-│   │   ├── movies\
-│   │   ├── shows\
-│   │   └── books\
-│   └── downloads\
-└── immich\
-    ├── library\
-    ├── upload\
-    ├── thumbs\
-    ├── encoded-video\
-    ├── profile\
-    └── backups\
-```
-
-### 5. Start Services
-
-You can start specific services using the Makefile:
-
+### 3. Environment Configuration
+Define your base variables inside the `.env` root file:
 ```bash
-# Start all services
+copy .env.example .env
+```
+
+### 4. Start the Stack
+```bash
 make up
-
-# Start specific services
-make nginx-up
-make minecraft-up
-
-make immich-up
-# ... and so on
 ```
 
-## Commands
+## 🛠️ Commands (Makefile)
 
-### Global
+The entire infrastructure is managed via simple `make` targets.
 
-| Command | Description |
-|---------|-------------|
-| `make up` | Start all services |
-| `make down` | Stop all services |
-| `make restart` | Restart all services |
-| `make pull` | Pull latest Docker images |
-| `make status` | Show containers status |
+### Global Actions
+| Command | Action |
+| :--- | :--- |
+| `make up` | Boot all services |
+| `make down` | Tear down all containers |
+| `make restart` | Rebuild and restart the stack |
+| `make status` | Print current container status |
+| `make pull` | Fetch the latest Docker images |
+| `make backup` | Trigger the automated backup script |
 
-### Individual Services
-
+### Individual Control
 Syntax: `make <service>-<action>`
-
-Available actions: `up`, `down`, `restart`, `logs`
-
-**Special commands:**
 ```bash
-make minecraft-cli  # Open Minecraft RCON console
+make radarr-up
+make immich-down
+make nginx-restart
+make adguard-logs
 ```
 
-## Post-Installation Configuration
+## 💾 Backup System
 
-### Media Management
+Run backups safely by triggering:
+```bash
+make backup
+```
 
-1. **Radarr** (`http://localhost:7878`):
-   - Set root folder: `/data/jellyfin/library/movies`
-   - Add Prowlarr indexers
-   - Connect qBittorrent download client
-
-  2. **Sonarr** (`http://localhost:8989`):
-     - Set root folder: `/data/jellyfin/library/shows`
-     - Add Prowlarr indexers
-     - Connect qBittorrent download client
-
-  3. **Bazarr** (`http://localhost:6767`):
-     - Connect Radarr and Sonarr
-     - Add subtitle providers
-
-  4. **Prowlarr** (`http://localhost:9696`):
-     - Add indexers (use FlareSolverr proxy for protected sites)
-     - Sync with Radarr/Sonarr
-- Configure proxy hosts for your services
-- Set up SSL certificates
+The localized `backup.bat` script handles cold backups with strict **fail-fast** and **auto-recovery** policies:
+1. Performs a live SQL dump of the Immich Postgres database.
+2. Gracefully brings down the entire Homelab (`make down`) to free locked files.
+3. Synchronizes (Mirror) `app_data` configurations and `Media` to your isolated `BACKUP_DEST` via Robocopy.
+4. Auto-ignores volatile sockets (`.sock`, `.pid`) to prevent interruption.
+5. Automatically resumes all services (`make up`), even if the backup encounters an error along the way, guaranteeing zero unnotified downtime.

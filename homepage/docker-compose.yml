@@ -7,7 +7,8 @@ services:
       - 3001:3000
     volumes:
       - ./config:/app/config 
-      - /var/run/docker.sock:/var/run/docker.sock 
+      - ${MEDIA_ROOT}:/data:ro 
+    env_file: ../.env
     environment:
       TZ: ${TZ}
       TAILSCALE_IP: ${TAILSCALE_IP}
@@ -22,6 +23,15 @@ services:
       HOMEPAGE_VAR_ADMIN_USER: ${ADMIN_USER}
       HOMEPAGE_VAR_ADMIN_PASS: ${ADMIN_PASS}
       HOMEPAGE_VAR_ADMIN_EMAIL: ${ADMIN_EMAIL}
+
+  dockerproxy:
+    image: tecnativa/docker-socket-proxy
+    container_name: dockerproxy
+    environment:
+      - CONTAINERS=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
     
 networks:
   default:

@@ -7,7 +7,7 @@ services:
     ports:
       - "8084:80"
     volumes:
-      - ${HDD_ROOT:-/data}/filebrowser:/srv
+      - ${MEDIA_ROOT:-/data}/filebrowser:/srv
       - ./config:/config
     environment:
       - FB_DATABASE=/config/database.db
