@@ -1,3 +1,4 @@
+name: filebrowser
 services:
   filebrowser:
     image: filebrowser/filebrowser:latest
@@ -7,7 +8,7 @@ services:
     ports:
       - "8084:80"
     volumes:
-      - ${MEDIA_ROOT:-/data}/filebrowser:/srv
+      - ${MEDIA_DIR:-/data}/filebrowser:/srv
       - ./config:/config
     environment:
       - FB_DATABASE=/config/database.db
@@ -19,3 +20,5 @@ networks:
   default:
     name: caddy_net
     external: true
+
+

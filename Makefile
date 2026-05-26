@@ -14,8 +14,8 @@ help:
 	@echo "Individual services:"
 	@echo "  make adguard-[up|down|restart|logs]"
 	@echo "  make bazarr-[up|down|restart|logs]"
+	@echo "  make byparr-[up|down|restart|logs]"
 	@echo "  make filebrowser-[up|down|restart|logs]"
-	@echo "  make flaresolverr-[up|down|restart|logs]"
 	@echo "  make homepage-[up|down|restart|logs]"
 	@echo "  make immich-[up|down|restart|logs]"
 	@echo "  make jellyseerr-[up|down|restart|logs]"
@@ -26,13 +26,13 @@ help:
 	@echo "  make radarr-[up|down|restart|logs]"
 	@echo "  make sonarr-[up|down|restart|logs]"
 
-up: adguard-up bazarr-up filebrowser-up flaresolverr-up homepage-up immich-up jellyseerr-up mc-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
+up: adguard-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up mc-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
 
-down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down mc-down jellyseerr-down immich-down homepage-down flaresolverr-down filebrowser-down bazarr-down adguard-down
+down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down mc-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down adguard-down
 
 restart: down up
 
-pull: adguard-pull bazarr-pull filebrowser-pull flaresolverr-pull homepage-pull immich-pull jellyseerr-pull mc-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
+pull: adguard-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull mc-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
 
 status:
 	$(DC) ps -a
@@ -88,20 +88,20 @@ filebrowser-logs:
 filebrowser-pull:
 	cd filebrowser && $(DC) --env-file ../.env pull
 
-flaresolverr-up:
-	cd flaresolverr && $(DC) --env-file ../.env up -d
+byparr-up:
+	cd byparr && $(DC) --env-file ../.env up -d
 
-flaresolverr-down:
-	cd flaresolverr && $(DC) --env-file ../.env down
+byparr-down:
+	cd byparr && $(DC) --env-file ../.env down
 
-flaresolverr-restart:
-	cd flaresolverr && $(DC) --env-file ../.env restart
+byparr-restart:
+	cd byparr && $(DC) --env-file ../.env restart
 
-flaresolverr-logs:
-	cd flaresolverr && $(DC) --env-file ../.env logs -f
+byparr-logs:
+	cd byparr && $(DC) --env-file ../.env logs -f
 
-flaresolverr-pull:
-	cd flaresolverr && $(DC) --env-file ../.env pull
+byparr-pull:
+	cd byparr && $(DC) --env-file ../.env pull
 
 homepage-up:
 	cd homepage && $(DC) --env-file ../.env up -d
@@ -119,19 +119,19 @@ homepage-pull:
 	cd homepage && $(DC) --env-file ../.env pull
 
 immich-up:
-	cd immich && $(DC) --env-file ../.env --env-file .env up -d
+	cd immich && $(DC) --env-file ../.env up -d
 
 immich-down:
-	cd immich && $(DC) --env-file ../.env --env-file .env down
+	cd immich && $(DC) --env-file ../.env down
 
 immich-restart:
-	cd immich && $(DC) --env-file ../.env --env-file .env restart
+	cd immich && $(DC) --env-file ../.env restart
 
 immich-logs:
-	cd immich && $(DC) --env-file ../.env --env-file .env logs -f
+	cd immich && $(DC) --env-file ../.env logs -f
 
 immich-pull:
-	cd immich && $(DC) --env-file ../.env --env-file .env pull
+	cd immich && $(DC) --env-file ../.env pull
 
 jellyseerr-up:
 	cd jellyseerr && $(DC) --env-file ../.env up -d
@@ -153,7 +153,6 @@ mc-up:
 
 mc-down:
 	cd minecraft && $(DC) --env-file ../.env down
-
 mc-restart:
 	cd minecraft && $(DC) --env-file ../.env restart
 

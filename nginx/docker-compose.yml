@@ -1,3 +1,4 @@
+name: nginx
 services:
   nginx:
     container_name: nginx
@@ -17,3 +18,5 @@ networks:
   default:
     name: caddy_net
     external: true
+
+

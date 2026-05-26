@@ -152,7 +152,7 @@
         icon: minecraft.png
         href: "https://map.lacto.vip"
         description: "Live Server Map"
-        ping: http://minecraft-squaremap:80
+        ping: https://map.lacto.vip
 
     - Modpack Download:
         icon: mdi-file-download

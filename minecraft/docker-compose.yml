@@ -1,6 +1,7 @@
+name: minecraft
 services:
-  minecraft:
-    container_name: minecraft
+  minecraft-server:
+    container_name: minecraft-server
     image: itzg/minecraft-server:latest
     restart: unless-stopped
     tty: true

@@ -19,11 +19,11 @@ for /f "usebackq eol=# tokens=1,* delims==" %%A in (".env") do (
     set "%%A=!VAR!"
 )
 
-if "!BACKUP_DEST:~-1!"=="\" set "BACKUP_DEST=!BACKUP_DEST:~0,-1!"
+if "!BACKUP_DIR:~-1!"=="\" set "BACKUP_DIR=!BACKUP_DIR:~0,-1!"
 
-if "!MEDIA_ROOT!"=="" ( echo [ERROR] MEDIA_ROOT missing ^& goto :resume_services )
-if "!BACKUP_DEST!"=="" ( echo [ERROR] BACKUP_DEST missing ^& goto :resume_services )
-if not exist "!BACKUP_DEST!\" ( echo [ERROR] Dest !BACKUP_DEST! offline ^& goto :resume_services )
+if "!MEDIA_DIR!"=="" ( echo [ERROR] MEDIA_DIR missing ^& goto :resume_services )
+if "!BACKUP_DIR!"=="" ( echo [ERROR] BACKUP_DIR missing ^& goto :resume_services )
+if not exist "!BACKUP_DIR!\" ( echo [ERROR] Dest !BACKUP_DIR! offline ^& goto :resume_services )
 
 :: 2. Database Backup
 echo [*] Dumping Immich Database...
@@ -40,16 +40,16 @@ timeout /t 10 /nobreak > nul
 echo [*] Syncing Homelab config...
 set "XD="!APP_DIR!\immich\postgres" "!APP_DIR!\immich\model-cache" "!APP_DIR!\.git" "*logs*" "*log*""
 set "XF="ipc-socket" "*.sock" "*.pid" "*.pem""
-robocopy "!APP_DIR!" "!BACKUP_DEST!\homelab" /MIR /FFT /Z /XA:H /W:1 /R:1 /SL /XD !XD! /XF !XF!
+robocopy "!APP_DIR!" "!BACKUP_DIR!\homelab" /MIR /FFT /Z /XA:H /W:1 /R:1 /SL /XD !XD! /XF !XF!
 if %ERRORLEVEL% GEQ 8 ( echo [ERROR] Config sync failed ^& goto :resume_services )
 
 :: 5. Sync Media
 echo [*] Syncing Immich Media...
-robocopy "!MEDIA_ROOT!immich" "!BACKUP_DEST!\media\immich" /MIR /FFT /Z /XA:H /W:1 /R:1 /SL
+robocopy "!MEDIA_DIR!immich" "!BACKUP_DIR!\media\immich" /MIR /FFT /Z /XA:H /W:1 /R:1 /SL
 if %ERRORLEVEL% GEQ 8 ( echo [ERROR] Immich media sync failed ^& goto :resume_services )
 
 echo [*] Syncing Filebrowser Media...
-robocopy "!MEDIA_ROOT!filebrowser" "!BACKUP_DEST!\media\filebrowser" /MIR /FFT /Z /XA:H /W:1 /R:1 /SL
+robocopy "!MEDIA_DIR!filebrowser" "!BACKUP_DIR!\media\filebrowser" /MIR /FFT /Z /XA:H /W:1 /R:1 /SL
 if %ERRORLEVEL% GEQ 8 ( echo [ERROR] Filebrowser media sync failed ^& goto :resume_services )
 
 echo === Backup Completed Successfully ===

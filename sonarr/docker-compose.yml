@@ -1,3 +1,4 @@
+name: sonarr
 services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -8,10 +9,10 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config:/config
-      - ${MEDIA_ROOT}:/data
+      - ${MEDIA_DIR}:/data
 
     ports:
-      - 8989:8989
+      - "8989:8989"
     restart: unless-stopped
     networks:
       - default
@@ -20,3 +21,5 @@ networks:
   default:
     name: caddy_net
     external: true
+
+

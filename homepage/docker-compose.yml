@@ -1,13 +1,14 @@
+name: homepage
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     restart: unless-stopped
     ports:
-      - 3001:3000
+      - "3001:3000"
     volumes:
       - ./config:/app/config 
-      - ${MEDIA_ROOT}:/data:ro 
+      - ${MEDIA_DIR}:/data:ro 
     env_file: ../.env
     environment:
       TZ: ${TZ}
@@ -24,9 +25,9 @@ services:
       HOMEPAGE_VAR_ADMIN_PASS: ${ADMIN_PASS}
       HOMEPAGE_VAR_ADMIN_EMAIL: ${ADMIN_EMAIL}
 
-  dockerproxy:
+  homepage-dockerproxy:
     image: tecnativa/docker-socket-proxy
-    container_name: dockerproxy
+    container_name: homepage-dockerproxy
     environment:
       - CONTAINERS=1
     volumes:
@@ -37,3 +38,5 @@ networks:
   default:
     name: caddy_net
     external: true
+
+

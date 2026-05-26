@@ -1,3 +1,4 @@
+name: radarr
 services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -8,10 +9,10 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config:/config
-      - ${MEDIA_ROOT}:/data
+      - ${MEDIA_DIR}:/data
 
     ports:
-      - 7878:7878
+      - "7878:7878"
     restart: unless-stopped
     networks:
       - default
@@ -20,3 +21,5 @@ networks:
   default:
     name: caddy_net
     external: true
+
+

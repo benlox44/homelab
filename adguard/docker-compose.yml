@@ -1,3 +1,4 @@
+name: adguard
 services:
   adguard:
     container_name: adguard
@@ -18,3 +19,5 @@ networks:
   default:
     name: caddy_net
     external: true
+
+

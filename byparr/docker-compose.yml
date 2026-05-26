@@ -1,18 +1,13 @@
-name: bazarr
 services:
-  bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
-    container_name: bazarr
+  byparr:
+    image: ghcr.io/thephaseless/byparr:latest
+    container_name: byparr
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-    volumes:
-      - ./config:/config
-      - ${MEDIA_DIR}:/data
-
     ports:
-      - "6767:6767"
+      - "8191:8191"
     restart: unless-stopped
     networks:
       - default
@@ -21,5 +16,3 @@ networks:
   default:
     name: caddy_net
     external: true
-
-

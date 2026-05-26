@@ -10,8 +10,8 @@ All services are continuously sorted A-Z and routed through the unified `caddy_n
 | :--- | :--- | :--- |
 | **AdGuard Home** | Network-wide ad blocking & DNS | `53`, `3000`, `8083` |
 | **Bazarr** | Subtitle management | `6767` |
+| **ByParr** | Cloudflare bypass server | `8191` |
 | **Filebrowser** | Web file manager | `8084` |
-| **FlareSolverr** | Cloudflare bypass server | `8191` |
 | **Homepage** | Application dashboard | `3001` |
 | **Immich** | Self-hosted photo & video backup | `2283` |
 | **Jellyseerr** | Media request management | `5055` |
@@ -79,6 +79,6 @@ make backup
 The localized `backup.bat` script handles cold backups with strict **fail-fast** and **auto-recovery** policies:
 1. Performs a live SQL dump of the Immich Postgres database.
 2. Gracefully brings down the entire Homelab (`make down`) to free locked files.
-3. Synchronizes (Mirror) `app_data` configurations and `Media` to your isolated `BACKUP_DEST` via Robocopy.
+3. Synchronizes (Mirror) `app_data` configurations and `Media` to your isolated `BACKUP_DIR` via Robocopy.
 4. Auto-ignores volatile sockets (`.sock`, `.pid`) to prevent interruption.
 5. Automatically resumes all services (`make up`), even if the backup encounters an error along the way, guaranteeing zero unnotified downtime.

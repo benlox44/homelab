@@ -1,3 +1,4 @@
+name: prowlarr
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -9,7 +10,7 @@ services:
     volumes:
       - ./config:/config
     ports:
-      - 9696:9696
+      - "9696:9696"
     restart: unless-stopped
     networks:
       - default
@@ -18,3 +19,5 @@ networks:
   default:
     name: caddy_net
     external: true
+
+
