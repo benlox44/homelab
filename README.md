@@ -78,9 +78,9 @@ Run backups safely by triggering:
 make backup
 ```
 
-The localized `backup.bat` script handles cold backups with strict **fail-fast** and **auto-recovery** policies:
-1. Performs a live SQL dump of the Immich Postgres database.
-2. Gracefully brings down the entire Homelab (`make down`) to free locked files.
-3. Synchronizes (Mirror) `app_data` configurations and `Media` to your isolated `BACKUP_DIR` via Robocopy.
-4. Auto-ignores volatile sockets (`.sock`, `.pid`) to prevent interruption.
-5. Automatically resumes all services (`make up`), even if the backup encounters an error along the way, guaranteeing zero unnotified downtime.
+The portable `backup.py` script handles cold backups with strict **fail-fast** and **auto-recovery** policies:
+1. Creates a timestamped folder inside `BACKUP_DIR` using the cookievale-style `YYYY-MM-DD_HHMMSS` format.
+2. Stores the Immich database dump compressed as `config/immich_db_dump.sql.gz` and copies the current `.env` alongside it.
+3. Gracefully brings down the entire Homelab (`make down`) to free locked files before syncing the config and media trees.
+4. Synchronizes the repository config and media folders into `config/homelab` and `media/*` inside that timestamped backup folder.
+5. Keeps only the last 2 timestamped backups, so the destination stays small while still retaining a fallback copy.

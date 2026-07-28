@@ -43,7 +43,7 @@ logs:
 	$(DC) logs -f --tail 100
 
 backup:
-	@cmd /c "backup.bat"
+	@python backup.py
 
 adguard-up:
 	cd adguard && $(DC) --env-file ../.env up -d
