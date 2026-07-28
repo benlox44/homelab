@@ -3,6 +3,7 @@ services:
   adguard:
     container_name: adguard
     image: adguard/adguardhome:latest
+    stop_grace_period: 2m
     restart: unless-stopped
     ports:
       - '53:53/tcp'

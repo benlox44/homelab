@@ -3,6 +3,7 @@ services:
   nginx:
     container_name: nginx
     image: 'jc21/nginx-proxy-manager:latest'
+    stop_grace_period: 2m
     restart: unless-stopped
     ports:
       - '80:80'

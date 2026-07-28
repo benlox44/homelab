@@ -4,6 +4,7 @@ services:
     image: filebrowser/filebrowser:latest
     container_name: filebrowser
     user: "0:0"
+    stop_grace_period: 2m
     restart: unless-stopped
     ports:
       - "8084:80"

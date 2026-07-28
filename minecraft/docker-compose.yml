@@ -3,6 +3,8 @@ services:
   minecraft-server:
     container_name: minecraft-server
     image: itzg/minecraft-server:latest
+    init: true
+    stop_grace_period: 5m
     restart: unless-stopped
     tty: true
     stdin_open: true

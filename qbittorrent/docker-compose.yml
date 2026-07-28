@@ -5,6 +5,7 @@ services:
     image: lscr.io/linuxserver/qbittorrent
     container_name: qbittorrent
     hostname: qbittorrent
+    stop_grace_period: 2m
     restart: unless-stopped
     environment:
       - PUID=${PUID}

@@ -3,6 +3,7 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
+    stop_grace_period: 2m
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

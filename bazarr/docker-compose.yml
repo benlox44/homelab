@@ -3,6 +3,7 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
+    stop_grace_period: 2m
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

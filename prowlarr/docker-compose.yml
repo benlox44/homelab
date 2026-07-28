@@ -3,6 +3,7 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
+    stop_grace_period: 2m
     environment:
       - PUID=1000
       - PGID=1000

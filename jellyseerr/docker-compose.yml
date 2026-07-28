@@ -3,6 +3,7 @@ services:
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
+    stop_grace_period: 2m
     environment:
       - LOG_LEVEL=info
       - TZ=${TZ}
@@ -20,5 +21,3 @@ networks:
   default:
     name: caddy_net
     external: true
-
-
