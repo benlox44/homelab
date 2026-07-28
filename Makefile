@@ -8,11 +8,13 @@ help:
 	@echo "  make down         - Stop all services"
 	@echo "  make restart      - Restart all services"
 	@echo "  make pull         - Pull latest images"
+	@echo "  make logs         - Follow all service logs"
 	@echo "  make status       - Show containers status"
 	@echo "  make backup       - Run the backup script"
 	@echo ""
 	@echo "Individual services:"
 	@echo "  make adguard-[up|down|restart|logs]"
+	@echo "  make audioplayer-[up|down|restart|logs]"
 	@echo "  make bazarr-[up|down|restart|logs]"
 	@echo "  make byparr-[up|down|restart|logs]"
 	@echo "  make filebrowser-[up|down|restart|logs]"
@@ -26,19 +28,19 @@ help:
 	@echo "  make radarr-[up|down|restart|logs]"
 	@echo "  make sonarr-[up|down|restart|logs]"
 
-up: adguard-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up mc-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
+up: adguard-up audioplayer-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up mc-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
 
-down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down mc-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down adguard-down
+down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down mc-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down audioplayer-down adguard-down
 
 restart: down up
 
-pull: adguard-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull mc-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
+pull: adguard-pull audioplayer-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull mc-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
 
 status:
 	$(DC) ps -a
 
 logs:
-	$(DC) ps -a
+	$(DC) logs -f --tail 100
 
 backup:
 	@cmd /c "backup.bat"
@@ -57,6 +59,21 @@ adguard-logs:
 
 adguard-pull:
 	cd adguard && $(DC) --env-file ../.env pull
+
+audioplayer-up:
+	cd audioplayer && $(DC) --env-file ../.env up -d --build
+
+audioplayer-down:
+	cd audioplayer && $(DC) --env-file ../.env down
+
+audioplayer-restart:
+	cd audioplayer && $(DC) --env-file ../.env restart
+
+audioplayer-logs:
+	cd audioplayer && $(DC) --env-file ../.env logs -f
+
+audioplayer-pull:
+	cd audioplayer && $(DC) --env-file ../.env pull
 
 bazarr-up:
 	cd bazarr && $(DC) --env-file ../.env up -d

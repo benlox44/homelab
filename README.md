@@ -9,6 +9,7 @@ All services are continuously sorted A-Z and routed through the unified `caddy_n
 | Service | Description | Port |
 | :--- | :--- | :--- |
 | **AdGuard Home** | Network-wide ad blocking & DNS | `53`, `3000`, `8083` |
+| **AudioPlayer** | Minecraft MP3 uploader | `5000` |
 | **Bazarr** | Subtitle management | `6767` |
 | **ByParr** | Cloudflare bypass server | `8191` |
 | **Filebrowser** | Web file manager | `8084` |
@@ -57,6 +58,7 @@ The entire infrastructure is managed via simple `make` targets.
 | `make down` | Tear down all containers |
 | `make restart` | Rebuild and restart the stack |
 | `make status` | Print current container status |
+| `make logs` | Follow all service logs |
 | `make pull` | Fetch the latest Docker images |
 | `make backup` | Trigger the automated backup script |
 

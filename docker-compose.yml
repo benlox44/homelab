@@ -1,5 +1,6 @@
 include:
   - path: ./adguard/docker-compose.yml
+  - path: ./audioplayer/docker-compose.yml
   - path: ./bazarr/docker-compose.yml
   - path: ./byparr/docker-compose.yml
   - path: ./filebrowser/docker-compose.yml

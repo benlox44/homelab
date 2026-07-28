@@ -1,0 +1,17 @@
+name: audioplayer
+services:
+  audioplayer:
+    build: .
+    container_name: audioplayer
+    stop_grace_period: 2m
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../minecraft/data/audioplayer_uploads:/data/audioplayer_uploads
+      - ../minecraft/data/world/audio_player_data:/data/world/audio_player_data:ro
+    restart: unless-stopped
+
+networks:
+  default:
+    name: caddy_net
+    external: true

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audio Player</title>
+<style>
+  :root {
+    --bg: #14161b;
+    --panel: #1a1d24;
+    --panel-2: #101216;
+    --border: #262b34;
+    --accent: #e2a63f;
+    --accent-dim: #8a6a2e;
+    --text: #e7e9ee;
+    --muted: #767f8c;
+    --error: #ff6b6b;
+    --success: #5ccf8a;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--mono);
+    background: var(--bg);
+    color: var(--text);
+    padding: 18px 14px 40px;
+    font-size: 13px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+
+  /* header */
+  header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  header .dot { color: var(--accent); }
+  h1 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+  header .count {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 11.5px;
+  }
+
+  /* tabs + add panel */
+  .add-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    flex: 1;
+    padding: 8px 10px;
+    text-align: center;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 12px;
+    background: var(--panel-2);
+    border-right: 1px solid var(--border);
+    user-select: none;
+  }
+  .tab:last-child { border-right: none; }
+  .tab.active {
+    color: var(--accent);
+    background: var(--panel);
+  }
+  .tab-body { padding: 12px; display: none; }
+  .tab-body.active { display: block; }
+
+  .row { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+  .row > * { flex: 1; min-width: 120px; }
+  .row .grow2 { flex: 2; }
+
+  input[type="text"], input[type="file"] {
+    width: 100%;
+    padding: 7px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12.5px;
+  }
+  input::placeholder { color: #545c68; }
+  input:focus, button:focus { outline: 1px solid var(--accent); outline-offset: 1px; }
+
+  button {
+    background: var(--accent);
+    color: #191305;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+  button:hover { filter: brightness(1.08); }
+  button:disabled { opacity: 0.45; cursor: not-allowed; filter: none; }
+  button.ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    font-weight: 500;
+  }
+  button.ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  .actions-line { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+  #status, #youtubeStatus { font-size: 11.5px; min-height: 1em; }
+  .error { color: var(--error); }
+  .success { color: var(--success); }
+
+  /* file list */
+  .list-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 0 6px;
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .list-header::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid var(--border);
+  }
+
+  .track {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel);
+    padding: 8px 10px;
+    margin-bottom: 6px;
+  }
+  .track-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .track-name {
+    font-weight: 600;
+    font-size: 12.5px;
+    word-break: break-all;
+    flex: 1;
+  }
+  .track-owner { color: var(--muted); font-size: 10.5px; }
+  .track-warn { color: var(--error); font-size: 10.5px; }
+  .track-toggle {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    padding: 2px 6px;
+    font-family: var(--mono);
+  }
+  .track-toggle:hover { color: var(--accent); }
+  .track-body {
+    display: none;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+    gap: 8px;
+  }
+  .track-body.open { display: flex; flex-direction: column; }
+  audio { width: 100%; height: 28px; filter: invert(0.88) hue-rotate(180deg); }
+  .cmd-row { display: flex; gap: 6px; align-items: center; }
+  .cmd-row::before { content: "❯"; color: var(--accent); font-size: 12px; }
+  .cmd {
+    flex: 1;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 11.5px;
+    color: #c9d1de;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .copy-btn {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  .copy-btn:hover { color: var(--text); border-color: var(--muted); }
+  .copy-btn.copied { color: var(--success); border-color: var(--success); }
+
+  .empty {
+    color: var(--muted);
+    font-size: 12px;
+    padding: 10px 2px;
+  }
+
+  @media (max-width: 560px) {
+    .row > * { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <span class="dot">●</span>
+    <h1>audio_player</h1>
+    <span class="count" id="totalCount"></span>
+  </header>
+
+  <div class="add-panel">
+    <div class="tabs">
+      <div class="tab active" data-tab="file">upload file</div>
+      <div class="tab" data-tab="youtube">from youtube</div>
+    </div>
+
+    <div class="tab-body active" id="tab-file">
+      <form id="uploadForm">
+        <div class="row">
+          <div class="grow2"><input type="file" id="fileInput" accept=".mp3,audio/mpeg" required></div>
+          <div><input type="text" id="nameInput" placeholder="track_name" required></div>
+        </div>
+        <div class="actions-line">
+          <button type="submit" id="submitBtn">Upload</button>
+          <span id="status"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="tab-body" id="tab-youtube">
+      <form id="youtubeForm">
+        <div class="row">
+          <input type="text" class="grow2" id="youtubeUrl" placeholder="https://youtube.com/watch?v=..." required>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="youtubeName" placeholder="track_name" required>
+          <input type="text" id="youtubeTrim" placeholder="trim 0:15,1:05 (optional)">
+        </div>
+        <div class="actions-line">
+          <button type="submit" id="youtubeSubmitBtn">Import</button>
+          <span id="youtubeStatus"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="list-header">temporary</div>
+  <div id="temporaryList"></div>
+
+  <div class="list-header">permanent</div>
+  <div id="permanentList"></div>
+
+</div>
+
+<script>
+const temporaryList = document.getElementById('temporaryList');
+const permanentList = document.getElementById('permanentList');
+const form = document.getElementById('uploadForm');
+const statusEl = document.getElementById('status');
+const submitBtn = document.getElementById('submitBtn');
+const youtubeForm = document.getElementById('youtubeForm');
+const youtubeStatus = document.getElementById('youtubeStatus');
+const youtubeSubmitBtn = document.getElementById('youtubeSubmitBtn');
+const totalCount = document.getElementById('totalCount');
+
+// tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-body').forEach(b => b.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function bindTrackToggle(item) {
+  const toggle = item.querySelector('.track-toggle');
+  const body = item.querySelector('.track-body');
+  toggle.addEventListener('click', () => {
+    const open = body.classList.toggle('open');
+    toggle.textContent = open ? 'hide' : 'play / copy';
+  });
+}
+
+function bindCopy(item) {
+  const btn = item.querySelector('.copy-btn');
+  btn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(btn.dataset.command);
+    const original = btn.textContent;
+    btn.textContent = 'copied';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 1200);
+  });
+}
+
+async function loadFiles() {
+  const [temporaryRes, permanentRes] = await Promise.all([
+    fetch('/temporary-files'),
+    fetch('/permanent-files')
+  ]);
+
+  const temporaryFiles = await temporaryRes.json();
+  const permanentFiles = await permanentRes.json();
+
+  temporaryList.innerHTML = '';
+  permanentList.innerHTML = '';
+
+  totalCount.textContent = `${temporaryFiles.length + permanentFiles.length} tracks`;
+
+  if (temporaryFiles.length === 0) {
+    temporaryList.innerHTML = '<div class="empty">nothing uploaded yet</div>';
+  } else {
+    temporaryFiles.forEach(name => {
+      const command = `/audioplayer serverfile ${name}`;
+      const item = document.createElement('div');
+      item.className = 'track';
+      item.innerHTML = `
+        <div class="track-top">
+          <span class="track-name">${escapeHtml(name)}</span>
+          <button class="track-toggle">play / copy</button>
+        </div>
+        <div class="track-body">
+          <audio controls preload="none" src="/audio/${encodeURIComponent(name)}"></audio>
+          <div class="cmd-row">
+            <div class="cmd">${escapeHtml(command)}</div>
+            <button class="copy-btn" data-command="${escapeHtml(command)}">copy</button>
+          </div>
+        </div>
+      `;
+      temporaryList.appendChild(item);
+      bindTrackToggle(item);
+      bindCopy(item);
+    });
+  }
+
+  if (permanentFiles.length === 0) {
+    permanentList.innerHTML = '<div class="empty">no permanent tracks indexed yet</div>';
+  } else {
+    permanentFiles.forEach(entry => {
+      const command = `/audioplayer apply ${entry.id}`;
+      const meta = [];
+      if (entry.ownerName) meta.push(`owner: ${entry.ownerName}${entry.ownerUuid ? ` (${entry.ownerUuid})` : ''}`);
+      const metaLine = meta.length ? `<span class="track-owner">${escapeHtml(meta.join(' · '))}</span>` : '';
+      const warnLine = entry.exists ? '' : '<div class="track-warn">file missing on disk</div>';
+      const item = document.createElement('div');
+      item.className = 'track';
+      item.innerHTML = `
+        <div class="track-top">
+          <span class="track-name">${escapeHtml(entry.fileName)}</span>
+          ${metaLine}
+          <button class="track-toggle">play / copy</button>
+        </div>
+        ${warnLine}
+        <div class="track-body">
+          <audio controls preload="none" src="/permanent-audio/${encodeURIComponent(entry.id)}"></audio>
+          <div class="cmd-row">
+            <div class="cmd">${escapeHtml(command)}</div>
+            <button class="copy-btn" data-command="${escapeHtml(command)}">copy</button>
+          </div>
+        </div>
+      `;
+      permanentList.appendChild(item);
+      bindTrackToggle(item);
+      bindCopy(item);
+    });
+  }
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fileInput = document.getElementById('fileInput');
+  const nameInput = document.getElementById('nameInput');
+  statusEl.textContent = '';
+  statusEl.className = '';
+
+  if (!fileInput.files[0]) return;
+
+  const formData = new FormData();
+  formData.append('file', fileInput.files[0]);
+  formData.append('newname', nameInput.value);
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Uploading…';
+
+  try {
+    const res = await fetch('/upload', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (!res.ok) {
+      statusEl.textContent = data.error || 'Upload failed';
+      statusEl.className = 'error';
+    } else {
+      statusEl.textContent = `saved: ${data.filename} (${data.duration}s)`;
+      statusEl.className = 'success';
+      form.reset();
+      loadFiles();
+    }
+  } catch (err) {
+    statusEl.textContent = 'network error';
+    statusEl.className = 'error';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Upload';
+  }
+});
+
+function splitTrimValue(value) {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return { start: '', end: '' };
+  }
+
+  const parts = trimmed.split(',').map(part => part.trim());
+  return {
+    start: parts[0] || '',
+    end: parts[1] || ''
+  };
+}
+
+youtubeForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const url = document.getElementById('youtubeUrl').value.trim();
+  const name = document.getElementById('youtubeName').value.trim();
+  const trimValue = splitTrimValue(document.getElementById('youtubeTrim').value);
+
+  youtubeStatus.textContent = '';
+  youtubeStatus.className = '';
+
+  youtubeSubmitBtn.disabled = true;
+  youtubeSubmitBtn.textContent = 'Importing…';
+
+  try {
+    const res = await fetch('/youtube', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        url,
+        newname: name,
+        start: trimValue.start,
+        end: trimValue.end
+      })
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      youtubeStatus.textContent = data.error || 'Import failed';
+      youtubeStatus.className = 'error';
+    } else {
+      youtubeStatus.textContent = `saved: ${data.filename} (${data.duration}s)`;
+      youtubeStatus.className = 'success';
+      youtubeForm.reset();
+      loadFiles();
+    }
+  } catch (err) {
+    youtubeStatus.textContent = 'network error';
+    youtubeStatus.className = 'error';
+  } finally {
+    youtubeSubmitBtn.disabled = false;
+    youtubeSubmitBtn.textContent = 'Import';
+  }
+});
+
+loadFiles();
+</script>
+</body>
+</html>

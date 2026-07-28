@@ -1,5 +1,30 @@
 ---
 - Applications:
+    - Filebrowser:
+        icon: filebrowser.png
+        href: "https://drive.lacto.vip"
+        description: "Private Cloud"
+        server: my-docker
+        container: filebrowser
+        ping: http://filebrowser:80
+        widget:
+            type: customapi
+            url: http://filebrowser:80/health
+            refreshInterval: 10000
+
+    - Immich:
+        icon: immich.png
+        href: "https://photos.lacto.vip"
+        description: "Photos & Videos"
+        server: my-docker
+        container: immich-server
+        ping: http://immich-server:2283
+        widget:
+            type: immich
+            url: http://immich-server:2283
+            key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
+            version: 2
+
     - Jellyfin:
         icon: jellyfin.png
         href: "https://tv.lacto.vip"
@@ -21,58 +46,7 @@
             type: jellyseerr
             url: http://jellyseerr:5055
             key: "{{HOMEPAGE_VAR_JELLYSEERR_API_KEY}}"
-
-
-    - Immich:
-        icon: immich.png
-        href: "https://photos.lacto.vip"
-        description: "Photos & Videos"
-        server: my-docker
-        container: immich-server
-        ping: http://immich-server:2283
-        widget:
-            type: immich
-            url: http://immich-server:2283
-            key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
-            version: 2
-
-    - Filebrowser:
-        icon: filebrowser.png
-        href: "https://drive.lacto.vip"
-        description: "Private Cloud"
-        server: my-docker
-        container: filebrowser
-        ping: http://filebrowser:80
-        widget:
-            type: customapi
-            url: http://filebrowser:80/health
-            refreshInterval: 10000
-
 - Media & Downloads:
-    - Radarr:
-        icon: radarr.png
-        href: "https://movies.lacto.vip"
-        description: "Movie Management"
-        server: my-docker
-        container: radarr
-        ping: http://radarr:7878
-        widget:
-            type: radarr
-            url: http://radarr:7878
-            key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
-
-    - Sonarr:
-        icon: sonarr.png
-        href: "https://series.lacto.vip"
-        description: "TV Show Management"
-        server: my-docker
-        container: sonarr
-        ping: http://sonarr:8989
-        widget:
-            type: sonarr
-            url: http://sonarr:8989
-            key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
-
     - Bazarr:
         icon: bazarr.png
         href: "https://subs.lacto.vip"
@@ -110,6 +84,30 @@
             username: "{{HOMEPAGE_VAR_ADMIN_USER}}"
             password: "{{HOMEPAGE_VAR_ADMIN_PASS}}"
 
+    - Radarr:
+        icon: radarr.png
+        href: "https://movies.lacto.vip"
+        description: "Movie Management"
+        server: my-docker
+        container: radarr
+        ping: http://radarr:7878
+        widget:
+            type: radarr
+            url: http://radarr:7878
+            key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
+
+    - Sonarr:
+        icon: sonarr.png
+        href: "https://series.lacto.vip"
+        description: "TV Show Management"
+        server: my-docker
+        container: sonarr
+        ping: http://sonarr:8989
+        widget:
+            type: sonarr
+            url: http://sonarr:8989
+            key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
+
 - Infrastructure:
     - AdGuard DNS:
         icon: adguard-home.png
@@ -123,6 +121,11 @@
             url: http://adguard:8083
             username: "{{HOMEPAGE_VAR_ADMIN_USER}}"
             password: "{{HOMEPAGE_VAR_ADMIN_PASS}}"
+
+    - Landing Page:
+        icon: mdi-web
+        href: "https://lacto.vip"
+        description: "Personal Landing Page"
 
     - Nginx Proxy:
         icon: nginx-proxy-manager.png
@@ -142,12 +145,15 @@
         href: "https://login.tailscale.com/admin/machines"
         description: "VPN Management"
 
-    - Landing Page:
-        icon: mdi-web
-        href: "https://lacto.vip"
-        description: "Personal Landing Page"
-
 - Gaming:
+    - AudioPlayer:
+        icon: mdi-music-circle
+        href: "https://mp3.lacto.vip"
+        description: "Minecraft MP3 Uploader"
+        server: my-docker
+        container: audioplayer
+        ping: http://audioplayer:5000
+
     - Minecraft Map:
         icon: minecraft.png
         href: "https://map.lacto.vip"
