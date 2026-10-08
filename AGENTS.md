@@ -4,7 +4,7 @@ When suggesting or creating code in this project, please adhere to the following
 
 1. **Alphabetical Order**: Always maintain alphabetical order when updating lists of services or configurations. This applies to:
    - `docker-compose.yml` (e.g., in the `include` array).
-   - `Makefile` (both the help target list and the targets definitions if applicable).
+   - `justfile` (recipes must remain sorted A-Z where applicable).
    - `README.md` (the "Services" list).
    - `homepage/config/services.yaml` (items within each category must remain sorted A-Z).
 
@@ -15,13 +15,13 @@ When suggesting or creating code in this project, please adhere to the following
 3. **Project Files Sync**:
    - Every time a new service is added, you MUST ensure that all of the following are updated simultaneously to reflect the inclusion of the new service:
      - `docker-compose.yml` (Main include)
-     - `Makefile` (Targets and help list)
+     - `justfile` (Recipes list)
      - `README.md` (Services list)
      - `homepage/config/services.yaml` (Add to the appropriate category, respecting A-Z sorting).
 
 4. **Formatting**:
    - Maintain the standard repository format: Use Markdown tables where appropriate.
-   - For `Makefile`, ensure targets are named `<service_name>-up`, `<service_name>-down`, `<service_name>-restart`, `<service_name>-logs`. Match existing syntax (use tabs for Make targets).
+   - For `justfile`, ensure recipes are named `<service_name>-up`, `<service_name>-down`, `<service_name>-restart`, `<service_name>-logs`, `<service_name>-pull`.
 
 5. **Docker Networking (`caddy_net`)**:
    - Every new `docker-compose.yml` file for a service MUST connect to the external `caddy_net` network natively.
