@@ -10,6 +10,7 @@ lockfile
 .DS_Store
 Thumbs.db
 .vscode/
+.vs/
 __pycache__/
 
 *.db
