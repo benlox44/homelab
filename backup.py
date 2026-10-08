@@ -145,12 +145,12 @@ def dump_immich_database(destination: Path) -> None:
 
 def stop_services() -> None:
     log.info("[*] Stopping all containers...")
-    run_command(["make", "down"], cwd=ROOT)
+    run_command(["just", "down"], cwd=ROOT)
 
 
 def start_services() -> None:
     log.info("[*] Ensuring containers are UP...")
-    run_command(["make", "up"], cwd=ROOT)
+    run_command(["just", "up"], cwd=ROOT)
 
 
 def cleanup_old_backups(dest: Path) -> None:

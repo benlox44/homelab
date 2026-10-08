@@ -1,6 +1,6 @@
 # Homelab Stack
 
-A cleanly organized, Make-driven self-hosted environment using Docker Compose.
+A cleanly organized, Just-driven self-hosted environment using Docker Compose.
 
 ## 📦 Services
 
@@ -27,7 +27,7 @@ All services are continuously sorted A-Z and routed through the unified `caddy_n
 
 ### 1. Prerequisites
 - **Docker** and **Docker Compose**
-- **Make**
+- **Just**
 - Dedicated media storage drives.
 
 ### 2. Network Setup
@@ -44,43 +44,43 @@ copy .env.example .env
 
 ### 4. Start the Stack
 ```bash
-make up
+just up
 ```
 
-## 🛠️ Commands (Makefile)
+## 🛠️ Commands (justfile)
 
-The entire infrastructure is managed via simple `make` targets.
+The entire infrastructure is managed via simple `just` recipes.
 
 ### Global Actions
 | Command | Action |
 | :--- | :--- |
-| `make up` | Boot all services |
-| `make down` | Tear down all containers |
-| `make restart` | Rebuild and restart the stack |
-| `make status` | Print current container status |
-| `make logs` | Follow all service logs |
-| `make pull` | Fetch the latest Docker images |
-| `make backup` | Trigger the automated backup script |
+| `just up` | Boot all services |
+| `just down` | Tear down all containers |
+| `just restart` | Rebuild and restart the stack |
+| `just status` | Print current container status |
+| `just logs` | Follow all service logs |
+| `just pull` | Fetch the latest Docker images |
+| `just backup` | Trigger the automated backup script |
 
 ### Individual Control
-Syntax: `make <service>-<action>`
+Syntax: `just <service>-<action>`
 ```bash
-make radarr-up
-make immich-down
-make nginx-restart
-make adguard-logs
+just radarr-up
+just immich-down
+just nginx-restart
+just adguard-logs
 ```
 
 ## 💾 Backup System
 
 Run backups safely by triggering:
 ```bash
-make backup
+just backup
 ```
 
 The portable `backup.py` script handles cold backups with strict **fail-fast** and **auto-recovery** policies:
 1. Creates a timestamped folder inside `BACKUP_DIR` using the cookievale-style `YYYY-MM-DD_HHMMSS` format.
 2. Stores the Immich database dump compressed as `config/immich_db_dump.sql.gz` and copies the current `.env` alongside it.
-3. Gracefully brings down the entire Homelab (`make down`) to free locked files before syncing the config and media trees.
+3. Gracefully brings down the entire Homelab (`just down`) to free locked files before syncing the config and media trees.
 4. Synchronizes the repository config and media folders into `config/homelab` and `media/*` inside that timestamped backup folder.
 5. Keeps only the last 2 timestamped backups, so the destination stays small while still retaining a fallback copy.
