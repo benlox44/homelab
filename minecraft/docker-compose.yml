@@ -15,14 +15,14 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: FABRIC
-      JAVA_VERSION: 21
-      VERSION: "1.21.11"
+      JAVA_VERSION: 25
+      VERSION: "26.3"
       MEMORY: "5G"
       MAX_PLAYERS: "10"
       ENABLE_AUTOPAUSE: "false"
       PAUSE_WHEN_EMPTY_SECONDS: "60"
       MAX_TICK_TIME: "-1"
-      MOTD: "\u00a7r           \u00a7f\u00a7lSurvival\u00a7f \u00a7oForever World\u00a7f  [1.12.11]\u00a7r\n\u00a7f\u00a7l              Network: \u00a79\u00a7n\u00a7olacto.vip"
+      MOTD: "\u00a7r           \u00a7f\u00a7lSurvival\u00a7f \u00a7oForever World\u00a7f  [26.3]\u00a7r\n\u00a7f\u00a7l              Network: \u00a79\u00a7n\u00a7olacto.vip"
       TZ: ${TZ}
       DIFFICULTY: "3"
       FORCE_GAMEMODE: "true"
