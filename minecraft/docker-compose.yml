@@ -1,7 +1,7 @@
 name: minecraft
 services:
-  minecraft-server:
-    container_name: minecraft-server
+  minecraft:
+    container_name: minecraft
     image: itzg/minecraft-server:latest
     init: true
     stop_grace_period: 5m
@@ -22,8 +22,8 @@ services:
       ENABLE_AUTOPAUSE: "false"
       PAUSE_WHEN_EMPTY_SECONDS: "60"
       MAX_TICK_TIME: "-1"
-      MOTD: "\u00a7r           \u00a7f\u00a7lSurvival\u00a7f \u00a7oForever World\u00a7f  [26.3]\u00a7r\n\u00a7f\u00a7l              Network: \u00a79\u00a7n\u00a7olacto.vip"
-      TZ: ${TZ}
+      MOTD: "§r           §f§lSurvival§f §oForever World§f  [26.3]§r\n§f§l              Network: §9§n§olacto.vip"
+      TZ: ${TZ:-America/Santiago}
       DIFFICULTY: "3"
       FORCE_GAMEMODE: "true"
       ENTITY_BROADCAST_RANGE_PERCENTAGE: "175"

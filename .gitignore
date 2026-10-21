@@ -18,6 +18,8 @@ __pycache__/
 *.db-wal
 *.sqlite
 minecraft/data/
+minecraft/backup.py
+minecraft/justfile
 nginx/data/
 nginx/letsencrypt/
 immich/library/
