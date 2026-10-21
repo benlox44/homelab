@@ -11,16 +11,16 @@ help:
     @just --list
 
 # Start all services in individual stacks
-up: adguard-up audioplayer-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up mc-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
+up: adguard-up audioplayer-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
 
 # Stop all services
-down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down mc-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down audioplayer-down adguard-down
+down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down audioplayer-down adguard-down
 
 # Restart all services
 restart: down up
 
 # Pull latest images for all services
-pull: adguard-pull audioplayer-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull mc-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
+pull: adguard-pull audioplayer-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
 
 # Show containers status
 status:
@@ -161,25 +161,6 @@ jellyseerr-logs:
 
 jellyseerr-pull:
     cd jellyseerr && {{ dc }} --env-file ../.env pull
-
-# --- Minecraft ---
-mc-up:
-    cd minecraft && {{ dc }} --env-file ../.env up -d
-
-mc-down:
-    cd minecraft && {{ dc }} --env-file ../.env down
-
-mc-restart:
-    cd minecraft && {{ dc }} --env-file ../.env restart
-
-mc-logs:
-    cd minecraft && {{ dc }} --env-file ../.env logs -f
-
-mc-cli:
-    cd minecraft && {{ dc }} --env-file ../.env exec -it minecraft-server rcon-cli
-
-mc-pull:
-    cd minecraft && {{ dc }} --env-file ../.env pull
 
 # --- Nginx ---
 nginx-up:

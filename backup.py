@@ -21,6 +21,7 @@ CONFIG_EXCLUDES = [
     "immich/model-cache",
     "logs",
     "log",
+    "minecraft",
 ]
 CONFIG_FILE_EXCLUDES = ["ipc-socket", "*.sock", "*.pid", "*.pem"]
 MEDIA_SOURCES = ["immich", "filebrowser"]
