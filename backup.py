@@ -84,8 +84,8 @@ def sync_tree(source: Path, target: Path, patterns: list[str]) -> None:
         for pattern in patterns:
             if pattern in CONFIG_FILE_EXCLUDES:
                 robocopy_file_excludes.append(pattern)
-            elif "/" in pattern or pattern.startswith(".") or pattern in {"logs", "log"}:
-                robocopy_dir_excludes.append(str(source / pattern) if "/" in pattern or pattern.startswith(".") else pattern)
+            else:
+                robocopy_dir_excludes.append(str(source / pattern) if ("/" in pattern or (source / pattern).exists()) else pattern)
 
         args = [
             "robocopy",
@@ -95,6 +95,7 @@ def sync_tree(source: Path, target: Path, patterns: list[str]) -> None:
             "/FFT",
             "/Z",
             "/XA:H",
+            "/XJ",
             "/W:1",
             "/R:1",
             "/SL",
