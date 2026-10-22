@@ -3,7 +3,7 @@ name: immich
 services:
   immich-server:
     container_name: immich-server
-    image: ghcr.io/immich-app/immich-server:v2
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     stop_grace_period: 2m
     volumes:
       - ${MEDIA_DIR}/immich:/data
@@ -26,7 +26,7 @@ services:
 
   immich-machine-learning:
     container_name: immich-machine-learning
-    image: ghcr.io/immich-app/immich-machine-learning:v2
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
     stop_grace_period: 2m
     deploy:
       resources:
