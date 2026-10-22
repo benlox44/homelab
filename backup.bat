@@ -3,13 +3,13 @@ setlocal
 cd /d "%~dp0"
 
 echo ==================================================
-echo   INICIANDO RESPALDO HOMELAB
-echo   Fecha/Hora: %date% %time%
+echo   HOMELAB BACKUP STARTED
+echo   Date/Time: %date% %time%
 echo ==================================================
 
 python backup.py
 if %ERRORLEVEL% equ 0 (
-    echo [OK] Homelab respaldado con exito.
+    echo [OK] Homelab backup completed successfully.
 ) else (
-    echo [ERROR] Homelab fallo con codigo %ERRORLEVEL%.
+    echo [ERROR] Homelab backup failed with exit code %ERRORLEVEL%.
 )
