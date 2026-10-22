@@ -11,16 +11,16 @@ help:
     @just --list
 
 # Start all services in individual stacks
-up: adguard-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
+up: adguard-up bazarr-up byparr-up filebrowser-up homepage-up immich-up nginx-up prowlarr-up qbit-up radarr-up seerr-up sonarr-up
 
 # Stop all services
-down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down adguard-down
+down: sonarr-down seerr-down radarr-down qbit-down prowlarr-down nginx-down immich-down homepage-down filebrowser-down byparr-down bazarr-down adguard-down
 
 # Restart all services
 restart: down up
 
 # Pull latest images for all services
-pull: adguard-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
+pull: adguard-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull nginx-pull prowlarr-pull qbit-pull radarr-pull seerr-pull sonarr-pull
 
 # Show containers status
 status:
@@ -130,21 +130,6 @@ immich-logs:
 immich-pull:
     cd immich && {{ dc }} --env-file ../.env pull
 
-# --- Jellyseerr ---
-jellyseerr-up:
-    cd jellyseerr && {{ dc }} --env-file ../.env up -d
-
-jellyseerr-down:
-    cd jellyseerr && {{ dc }} --env-file ../.env down
-
-jellyseerr-restart:
-    cd jellyseerr && {{ dc }} --env-file ../.env restart
-
-jellyseerr-logs:
-    cd jellyseerr && {{ dc }} --env-file ../.env logs -f
-
-jellyseerr-pull:
-    cd jellyseerr && {{ dc }} --env-file ../.env pull
 
 # --- Nginx ---
 nginx-up:
@@ -209,6 +194,22 @@ radarr-logs:
 
 radarr-pull:
     cd radarr && {{ dc }} --env-file ../.env pull
+
+# --- Seerr ---
+seerr-up:
+    cd seerr && {{ dc }} --env-file ../.env up -d
+
+seerr-down:
+    cd seerr && {{ dc }} --env-file ../.env down
+
+seerr-restart:
+    cd seerr && {{ dc }} --env-file ../.env restart
+
+seerr-logs:
+    cd seerr && {{ dc }} --env-file ../.env logs -f
+
+seerr-pull:
+    cd seerr && {{ dc }} --env-file ../.env pull
 
 # --- Sonarr ---
 sonarr-up:

@@ -35,16 +35,16 @@
             url: https://tv.lacto.vip
             key: "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}"
 
-    - Jellyseerr:
-        icon: jellyseerr.png
+    - Seerr:
+        icon: seerr.png
         href: "https://requests.lacto.vip"
         description: "Movies & TV Requests"
         server: my-docker
-        container: jellyseerr
-        ping: http://requests.lacto.vip
+        container: seerr
+        ping: https://requests.lacto.vip
         widget:
-            type: jellyseerr
-            url: http://jellyseerr:5055
+            type: seerr
+            url: http://seerr:5055
             key: "{{HOMEPAGE_VAR_JELLYSEERR_API_KEY}}"
 - Media & Downloads:
     - Bazarr:

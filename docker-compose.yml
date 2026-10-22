@@ -5,9 +5,9 @@ include:
   - path: ./filebrowser/docker-compose.yml
   - path: ./homepage/docker-compose.yml
   - path: ./immich/docker-compose.yml
-  - path: ./jellyseerr/docker-compose.yml
   - path: ./nginx/docker-compose.yml
   - path: ./prowlarr/docker-compose.yml
   - path: ./qbittorrent/docker-compose.yml
   - path: ./radarr/docker-compose.yml
+  - path: ./seerr/docker-compose.yml
   - path: ./sonarr/docker-compose.yml

@@ -20,8 +20,6 @@ immich/model-cache/
 immich/postgres/
 immich/*.sql
 
-jellyseerr/config/
-
 nginx/data/
 nginx/letsencrypt/
 
@@ -30,5 +28,8 @@ prowlarr/config/
 qbittorrent/config/
 
 radarr/config/
+
+seerr/config/
+seerr/config_jellyseerr_backup/
 
 sonarr/config/

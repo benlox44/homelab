@@ -1,21 +1,23 @@
-name: jellyseerr
+name: seerr
 services:
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    init: true
     stop_grace_period: 2m
     environment:
       - LOG_LEVEL=info
       - TZ=${TZ}
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PORT=5055
     ports:
       - "5055:5055"
     volumes:
       - ./config:/app/config
     restart: unless-stopped
     networks:
-      - default
+      default:
+        aliases:
+          - jellyseerr
 
 networks:
   default:
