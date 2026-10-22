@@ -11,16 +11,16 @@ help:
     @just --list
 
 # Start all services in individual stacks
-up: adguard-up audioplayer-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
+up: adguard-up bazarr-up byparr-up filebrowser-up homepage-up immich-up jellyseerr-up nginx-up prowlarr-up qbit-up radarr-up sonarr-up
 
 # Stop all services
-down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down audioplayer-down adguard-down
+down: sonarr-down radarr-down qbit-down prowlarr-down nginx-down jellyseerr-down immich-down homepage-down filebrowser-down byparr-down bazarr-down adguard-down
 
 # Restart all services
 restart: down up
 
 # Pull latest images for all services
-pull: adguard-pull audioplayer-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
+pull: adguard-pull bazarr-pull byparr-pull filebrowser-pull homepage-pull immich-pull jellyseerr-pull nginx-pull prowlarr-pull qbit-pull radarr-pull sonarr-pull
 
 # Show containers status
 status:
