@@ -146,13 +146,11 @@
         description: "VPN Management"
 
 - Gaming:
-    - AudioPlayer:
+    - Minecraft AudioPlayer:
         icon: mdi-music-circle
         href: "https://mp3.lacto.vip"
-        description: "Minecraft MP3 Uploader"
-        server: my-docker
-        container: audioplayer
-        ping: http://audioplayer:5000
+        description: "MP3 Uploader"
+        ping: https://mp3.lacto.vip
 
     - Minecraft Map:
         icon: minecraft.png
@@ -160,7 +158,7 @@
         description: "Live Server Map"
         ping: https://map.lacto.vip
 
-    - Modpack Download:
-        icon: mdi-file-download
-        href: "https://drive.lacto.vip/share/8x9f5Ye5"
-        description: "Modpack Share Page"
+    - Minecraft Modpack:
+        icon: github.png
+        href: "https://github.com/benlox44/minecraft-smp-mods/releases"
+        description: "Download modpack"
