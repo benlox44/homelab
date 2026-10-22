@@ -9,7 +9,7 @@ layout:
   - Media & Downloads:
       style: row
       columns: 3
-  - Gaming:
+  - Minecraft:
       style: row
       columns: 2
   - Infrastructure:

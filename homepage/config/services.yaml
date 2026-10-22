@@ -149,7 +149,7 @@
     - Server IP:
         icon: minecraft.png
         href: "#copy-server-ip"
-        description: "Minecraft Server IP: mc.lacto.vip"
+        description: "Minecraft Server IP"
 
     - Map:
         icon: mdi-map

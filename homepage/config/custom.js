@@ -60,12 +60,12 @@
 
       if (
         href.includes("copy-server-ip") ||
-        (text.includes("Server IP") && text.includes("mc.lacto.vip"))
+        (text.includes("Server IP") && text.includes("Minecraft"))
       ) {
         e.preventDefault();
         e.stopPropagation();
         copyText(IP_TO_COPY).then(() => {
-          showToast("¡IP copiada: " + IP_TO_COPY + "!");
+          showToast(IP_TO_COPY + " copied to clipboard!");
         });
       }
     },
