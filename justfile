@@ -50,22 +50,6 @@ adguard-logs:
 adguard-pull:
     cd adguard && {{ dc }} --env-file ../.env pull
 
-# --- AudioPlayer ---
-audioplayer-up:
-    cd audioplayer && {{ dc }} --env-file ../.env up -d --build
-
-audioplayer-down:
-    cd audioplayer && {{ dc }} --env-file ../.env down
-
-audioplayer-restart:
-    cd audioplayer && {{ dc }} --env-file ../.env restart
-
-audioplayer-logs:
-    cd audioplayer && {{ dc }} --env-file ../.env logs -f
-
-audioplayer-pull:
-    cd audioplayer && {{ dc }} --env-file ../.env pull
-
 # --- Bazarr ---
 bazarr-up:
     cd bazarr && {{ dc }} --env-file ../.env up -d
