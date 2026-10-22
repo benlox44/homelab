@@ -145,20 +145,25 @@
         href: "https://login.tailscale.com/admin/machines"
         description: "VPN Management"
 
-- Gaming:
-    - Minecraft AudioPlayer:
-        icon: mdi-music-circle
-        href: "https://mp3.lacto.vip"
-        description: "MP3 Uploader"
-        ping: https://mp3.lacto.vip
-
-    - Minecraft Map:
+- Minecraft:
+    - Server IP:
         icon: minecraft.png
+        href: "#copy-server-ip"
+        description: "Minecraft Server IP: mc.lacto.vip"
+
+    - Map:
+        icon: mdi-map
         href: "https://map.lacto.vip"
-        description: "Live Server Map"
+        description: "Minecraft Live Server Map"
         ping: https://map.lacto.vip
 
-    - Minecraft Modpack:
+    - Modpack:
         icon: github.png
         href: "https://github.com/benlox44/minecraft-smp-mods/releases"
-        description: "Download modpack"
+        description: "Minecraft Modpack"
+
+    - AudioPlayer:
+        icon: mdi-music-circle
+        href: "https://mp3.lacto.vip"
+        description: "Minecraft MP3 Uploader"
+        ping: https://mp3.lacto.vip
