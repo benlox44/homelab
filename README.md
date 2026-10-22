@@ -9,18 +9,16 @@ All services are continuously sorted A-Z and routed through the unified `caddy_n
 | Service | Description | Port |
 | :--- | :--- | :--- |
 | **AdGuard Home** | Network-wide ad blocking & DNS | `53`, `3000`, `8083` |
-| **AudioPlayer** | Minecraft MP3 uploader | `5000` |
 | **Bazarr** | Subtitle management | `6767` |
 | **ByParr** | Cloudflare bypass server | `8191` |
 | **Filebrowser** | Web file manager | `8084` |
 | **Homepage** | Application dashboard | `3001` |
 | **Immich** | Self-hosted photo & video backup | `2283` |
-| **Jellyseerr** | Media request management | `5055` |
-| **Minecraft** | Minecraft Server & Squaremap | `25565` |
 | **Nginx** | Nginx Proxy Manager (Reverse proxy) | `80`, `81`, `443` |
 | **Prowlarr** | Indexer manager | `9696` |
 | **qBittorrent** | Torrent client | `8080`, `6881` |
 | **Radarr** | Movie collection manager | `7878` |
+| **Seerr** | Media request management | `5055` |
 | **Sonarr** | TV show collection manager | `8989` |
 
 ## 🚀 Getting Started

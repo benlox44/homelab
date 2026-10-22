@@ -9,7 +9,6 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
 BACKUP_RETENTION = 2
@@ -21,11 +20,9 @@ CONFIG_EXCLUDES = [
     "immich/model-cache",
     "logs",
     "log",
-    "minecraft",
 ]
 CONFIG_FILE_EXCLUDES = ["ipc-socket", "*.sock", "*.pid", "*.pem"]
 MEDIA_SOURCES = ["immich", "filebrowser"]
-
 
 logging.basicConfig(
     level=logging.INFO,
@@ -40,18 +37,17 @@ log = logging.getLogger(__name__)
 
 
 def load_env(env_file: Path) -> dict[str, str]:
-    env: dict[str, str] = {}
     if not env_file.exists():
         log.error("[ERROR] .env file not found: %s", env_file)
         sys.exit(1)
 
+    env: dict[str, str] = {}
     for line in env_file.read_text(encoding="utf-8").splitlines():
         stripped = line.strip()
         if not stripped or stripped.startswith("#") or "=" not in stripped:
             continue
         key, _, value = stripped.partition("=")
-        key = key.strip()
-        value = value.strip()
+        key, value = key.strip(), value.strip()
         if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
             value = value[1:-1]
         env[key] = value
@@ -66,6 +62,19 @@ def is_timestamp_dir(name: str) -> bool:
         datetime.strptime(name, "%Y-%m-%d_%H%M%S").replace(tzinfo=timezone.utc)
         return True
     except ValueError:
+        return False
+
+
+def verify_backup_destination(dest: Path) -> bool:
+    try:
+        dest.mkdir(parents=True, exist_ok=True)
+        probe = dest / ".backup_probe"
+        probe.write_text("ok", encoding="utf-8")
+        probe.unlink()
+        return True
+    except OSError as exc:
+        log.error("[ERROR] Backup destination '%s' is not accessible: %s", dest, exc)
+        log.error("[ERROR] Remote share may be offline. Skipping backup so running services remain unaffected.")
         return False
 
 
@@ -181,11 +190,12 @@ def main() -> None:
         sys.exit(1)
 
     backup_root = Path(backup_dest).expanduser()
-    backup_root.mkdir(parents=True, exist_ok=True)
+    if not verify_backup_destination(backup_root):
+        sys.exit(1)
 
     media_src = Path(media_root).expanduser()
     if not media_src.exists():
-        log.error("[ERROR] MEDIA_DIR (%s) does not exist", media_src)
+        log.error("[ERROR] MEDIA_DIR does not exist: %s", media_src)
         sys.exit(1)
 
     timestamp = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d_%H%M%S")

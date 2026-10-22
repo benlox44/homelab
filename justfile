@@ -2,13 +2,10 @@ set windows-shell := ["cmd.exe", "/c"]
 
 dc := "docker compose"
 
-# Show available options
 default:
     @just --list
 
-# Show available options
-help:
-    @just --list
+help: default
 
 # Start all services in individual stacks
 up: adguard-up bazarr-up byparr-up filebrowser-up homepage-up immich-up nginx-up prowlarr-up qbit-up radarr-up seerr-up sonarr-up
