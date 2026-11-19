@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import gzip
 import logging
+import os
 import shutil
+import stat
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -164,15 +166,29 @@ def start_services() -> None:
     run_command(["just", "up"], cwd=ROOT)
 
 
+def remove_tree(path: Path) -> None:
+    def handle_remove_readonly(func, target, _):
+        try:
+            os.chmod(target, stat.S_IWRITE)
+            func(target)
+        except OSError:
+            pass
+
+    if sys.version_info >= (3, 12):
+        shutil.rmtree(path, onexc=handle_remove_readonly)
+    else:
+        shutil.rmtree(path, onerror=handle_remove_readonly)
+
+
 def cleanup_old_backups(dest: Path) -> None:
     backup_dirs = sorted(
         (entry for entry in dest.iterdir() if entry.is_dir() and is_timestamp_dir(entry.name)),
-        key=lambda entry: entry.stat().st_mtime,
+        key=lambda entry: entry.name,
         reverse=True,
     )
     for old_dir in backup_dirs[BACKUP_RETENTION:]:
         log.info("  Removing: %s", old_dir)
-        shutil.rmtree(old_dir, ignore_errors=True)
+        remove_tree(old_dir)
 
 
 def main() -> None:
@@ -229,7 +245,7 @@ def main() -> None:
         log.info("=== Backup Completed Successfully ===")
     except Exception as exc:
         log.error("[ERROR] %s", exc)
-        shutil.rmtree(backup_dir, ignore_errors=True)
+        remove_tree(backup_dir)
         sys.exit(1)
     finally:
         try:
