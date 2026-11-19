@@ -56,7 +56,7 @@ def load_env(env_file: Path) -> dict[str, str]:
 
 
 def is_timestamp_dir(name: str) -> bool:
-    if len(name) != 19 or "_" not in name:
+    if len(name) != 17 or "_" not in name:
         return False
     try:
         datetime.strptime(name, "%Y-%m-%d_%H%M%S").replace(tzinfo=timezone.utc)
